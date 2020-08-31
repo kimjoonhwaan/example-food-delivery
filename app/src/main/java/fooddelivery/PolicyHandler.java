@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 public class PolicyHandler{
 
     @Autowired
-    주문Repository 주문Repository;
+    OrderRepository orderRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenever배달시작됨_주문상태변경(@Payload 배달시작됨 배달시작됨){
+    public void wheneverdeliverystarted_주문상태변경(@Payload deliverystarted deliverystarted){
 
-        if(배달시작됨.isMe() && 배달시작됨.getOrderId()!=null){
+        if(deliverystarted.isMe() && deliverystarted.getOrderId()!=null){
 
 //            try {
 //                // 원래 데이터가 트랜잭션 커밋되기도 전에 이벤트가 너무 빨리 도달하는 경우를 막기 위함
@@ -26,11 +26,11 @@ public class PolicyHandler{
 //                e.printStackTrace();
 //            }
 
-            System.out.println("배달시작됨 orderId = " + 배달시작됨.getOrderId());
+            System.out.println("deliverystarted orderId = " + deliverystarted.getOrderId());
 
             // Correlation id 는 'orderId' 임
-            주문Repository.findById(Long.valueOf(배달시작됨.getOrderId())).ifPresent((주문)->{
-               주문.set상태("배달시작됨");
+            주문Repository.findById(Long.valueOf(deliverystarted.getOrderId())).ifPresent((주문)->{
+               주문.set상태("deliverystarted");
                주문Repository.save(주문);
             });
 

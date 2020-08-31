@@ -1,6 +1,6 @@
 package fooddelivery.external;
 
-public class 결제이력 {
+public class PayHistory {
 
     private Long id;
     private String orderId;
